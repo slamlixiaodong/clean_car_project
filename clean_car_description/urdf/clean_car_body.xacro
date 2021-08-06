@@ -24,20 +24,20 @@
 
     <!-- Main body length, width, height and mass -->
     <xacro:property name="base_mass"        value="0.5" /> 
-    <xacro:property name="base_link_w" value="0.26"/>
-    <xacro:property name="base_link_h" value="0.005"/>  
-    <xacro:property name="base_link_d" value="0.26"/>
-    <xacro:property name="base_link_radius" value="0.13"/>
-    <xacro:property name="motor_x" value="-0.05"/>
+    <xacro:property name="base_link_w" value="2"/>    
+    <xacro:property name="base_link_h" value="0.4"/>  
+    <xacro:property name="base_link_d" value="1.5"/>    
+    <xacro:property name="base_link_radius" value="0.75"/>
+    <xacro:property name="motor_x" value="-0.4"/>
 
     <!-- Caster radius and mass -->
-    <xacro:property name="caster_radius"          value="0.033" /> 
+    <xacro:property name="caster_radius"          value="0.2" /> 
     <xacro:property name="caster_mass"            value="0.01" /> 
-    <xacro:property name="caster_joint_origin_x"  value="-0.12" />
+    <xacro:property name="caster_joint_origin_x"  value="-0.50" />
 
     <!-- Wheel radius, height and mass -->
-    <xacro:property name="wheel_radius" value="0.033" /> 
-    <xacro:property name="wheel_height" value="0.017" />
+    <xacro:property name="wheel_radius" value="0.2" /> 
+    <xacro:property name="wheel_height" value="0.04" />
     <xacro:property name="wheel_mass"   value="0.1" />
 
 
@@ -168,7 +168,7 @@
         <link name="base_link">
             <box_inertial_matrix  m="${base_mass}" w="${base_link_w}" h="${base_link_h}" d= "${base_link_d}" />
             <visual>
-                <origin xyz=" 0 0 ${wheel_radius}" rpy="0 0 0" />
+                <origin xyz=" 0 0 ${2 * wheel_radius}" rpy="0 0 0" />
                 <geometry>
                     <!-- <cylinder length="${base_link_length}" radius="${base_link_radius}"/> -->
                     <box size="${base_link_w} ${base_link_d} ${base_link_h}" />

@@ -49,5 +49,5 @@
 
     </node>
 
-    <node pkg="clean_car_description" type="clean_car_teleop.py" name="control_node" output="screen" />
+    <!-- <node pkg="clean_car_description" type="clean_car_teleop.py" name="control_node" output="screen" /> -->
 </launch>

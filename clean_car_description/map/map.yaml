@@ -1,4 +1,4 @@
-image: /home/lxd/test_ros/src/clean_car_description/map/map.pgm
+image: /home/lxd/test_ros/src/send_file/clean_car_description/map/map.pgm
 resolution: 0.050000
 origin: [-12.200000, -12.200000, 0.000000]
 negate: 0

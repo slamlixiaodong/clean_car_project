@@ -1,6 +1,6 @@
 #include "clean_car_target/clean_car_target.h"
 
-map<string,move_base_msgs::MoveBaseGoal> position_map,move_goal;
+map<string,move_base_msgs::MoveBaseGoal> move_goal;
 string target_file_path;
 void save_target_pose_callback(const geometry_msgs::PoseStamped::ConstPtr& msg)
 {
@@ -10,7 +10,7 @@ void save_target_pose_callback(const geometry_msgs::PoseStamped::ConstPtr& msg)
     tmp_target.target_pose.pose = msg->pose;
     cout<<"input position name:";
     cin>>position;
-    position_map.insert(pair<string,move_base_msgs::MoveBaseGoal>(position,tmp_target));
+    move_goal.insert(pair<string,move_base_msgs::MoveBaseGoal>(position,tmp_target));
 }
 
 map<string,move_base_msgs::MoveBaseGoal> read_target_from_file()
@@ -93,12 +93,30 @@ void target_publish()
 
 void save_target_to_file()
 {
+  string delete_someone_target_pose,key_value,flag;
+  ROS_INFO("if delete someone target pose, please input yes, else input no");
+  cin>>delete_someone_target_pose;
+  while(delete_someone_target_pose == "yes")
+  {
+    ROS_INFO("please input key value");
+    cin>>key_value;
+    bool delete_flag = move_goal.erase(key_value);
+    if(delete_flag)
+        ROS_INFO("delet %s target pose success",key_value.c_str());
+    ROS_INFO("delete next target pose, input yes");
+    cin>>flag;
+    if(flag == "yes")
+        continue;
+    else
+        break;
+  }
+  
   ofstream fout(target_file_path,ios::out|ios::binary);
   if(!fout)
       ROS_ERROR("file open failed");
   fout << std::setprecision(10);
-  
-  for(const auto& map_iterator : position_map)
+  ROS_INFO("start load data");
+  for(const auto& map_iterator : move_goal)
   {
     fout << map_iterator.first<<" " << map_iterator.second.target_pose.pose.position.x<< " "<< map_iterator.second.target_pose.pose.position.y << " "<< tf::getYaw(map_iterator.second.target_pose.pose.orientation) << "\n";
   }
@@ -115,7 +133,7 @@ void cmd_callback(const std_msgs::String::ConstPtr& msg)
     }
     if(msg->data == "save_target")
     {
-        fstream file(target_file_path, ios::out);
+        // fstream file(target_file_path, ios::out);
         save_target_to_file();
         ROS_INFO("save_target_successfull");
     }

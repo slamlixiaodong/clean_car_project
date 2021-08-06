@@ -34,6 +34,6 @@
           args="-urdf -model clean_car -param robot_description"/> 
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find clean_car_description)/rviz/test.rviz" required="true" />
 
-    <node pkg="clean_car_description" type="clean_car_teleop.py" name="control_node" output="screen" />
+    <!-- <node pkg="clean_car_description" type="clean_car_teleop.py" name="control_node" output="screen" /> -->
 
 </launch>

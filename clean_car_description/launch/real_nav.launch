@@ -3,12 +3,7 @@
     <!-- 设置地图的配置文件 -->
     <arg name="map" default="map.yaml" />
 
-    <arg name="world_name" value="$(find clean_car_description)/world/room.world"/>
-    <arg name="paused" default="false"/>
-    <arg name="use_sim_time" default="true"/>
-    <arg name="gui" default="true"/>
-    <arg name="headless" default="false"/>
-    <arg name="debug" default="false"/>
+ 
 
     <!-- 运行地图服务器，并且加载设置的地图-->
     <node name="map_server" pkg="map_server" type="map_server" args="$(find clean_car_description)/map/$(arg map)"/>
@@ -22,12 +17,10 @@
 
     <!-- 运行robot_state_publisher节点，发布tf  -->
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"  output="screen" >
-        <!-- <param name="publish_frequency" type="double" value="50.0" /> -->
+        <param name="publish_frequency" type="double" value="50.0" />
     </node>
 
-    <!-- 在gazebo中加载机器人模型-->
-    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
-          args="-urdf -model clean_car -param robot_description"/> 
+
     <!-- 激光里程计 -->
     <node pkg="laser_scan_matcher" type="laser_scan_matcher_node" 
     name="laser_scan_matcher_node" output="screen">
@@ -49,14 +42,6 @@
     <!-- 运行move_base节点 -->
     <include file="$(find clean_car_description)/launch/simulatation_car/move_base.launch" />
 
-    <include file="$(find gazebo_ros)/launch/empty_world.launch">
-        <arg name="world_name" value="$(arg world_name)" />
-        <arg name="debug" value="$(arg debug)" />
-        <arg name="gui" value="$(arg gui)" />
-        <arg name="paused" value="$(arg paused)"/>
-        <arg name="use_sim_time" value="$(arg use_sim_time)"/>
-        <arg name="headless" value="$(arg headless)"/>
-    </include>
     <!-- 启动AMCL节点 -->
     <include file="$(find clean_car_description)/launch/simulatation_car/amcl.launch" />
 
